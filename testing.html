@@ -1,0 +1,890 @@
+<!-- index.html
+Spine Decade Calendar — Advent-style grid focused on MAJOR RELEASED PROJECTS:
+- SpineNEXTGEN ERP
+- Online billing (PharmaTrader, SpineTrader)
+- Mobile apps (Venus Ayushmaan, Pen Order Booking, Spine SFA, Entrepreneur Program, SpineHRM, PPL, Venus DTS, Davai App)
+- Corporate websites (50+)
+- AI software (Bidcraft, Athena, Vortex)
+Plus backbone wins.
+
+Updated as per your requirement:
+✅ No “Quick copy”
+✅ Only: Launched | Short description | Impact & Benefits | Who it benefits
+✅ Added AI series: Bidcraft, Athena, Vortex
+
+How to run:
+- Save as index.html and open in browser.
+- Optional: add images in ./assets and set "visual" paths.
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Spine Decade Calendar</title>
+
+  <style>
+    :root{
+      --bg:#0e1014;
+      --text:#eef2ff;
+      --muted:#aab2c5;
+      --border:rgba(255,255,255,.09);
+      --accent:#7c5cff;
+      --accent2:#00d4ff;
+      --ok:#2dd4bf;
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: radial-gradient(1200px 700px at 10% 10%, rgba(124,92,255,.18), transparent 55%),
+                  radial-gradient(900px 600px at 90% 30%, rgba(0,212,255,.12), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    header{
+      max-width:1200px;
+      margin:0 auto;
+      padding:28px 18px 10px;
+      display:flex;
+      gap:18px;
+      align-items:flex-end;
+      justify-content:space-between;
+    }
+    .brand h1{ margin:0; font-size:28px; letter-spacing:.2px; }
+    .brand p{ margin:8px 0 0; color:var(--muted); font-size:14px; line-height:1.45; max-width:780px; }
+
+    .top-actions{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--text); font-size:13px;
+    }
+    .pill input, .pill select{
+      background:transparent; color:var(--text);
+      border:0; outline:none; font-size:13px;
+      min-width:170px;
+    }
+    .pill select{ cursor:pointer; min-width:160px; }
+
+    .btn{
+      cursor:pointer; border:1px solid var(--border);
+      background:rgba(255,255,255,.04); color:var(--text);
+      padding:10px 12px; border-radius:12px;
+      font-weight:700;
+      transition:transform .06s ease, background .15s ease, border-color .15s ease;
+    }
+    .btn:hover{ background:rgba(255,255,255,.07); }
+    .btn:active{ transform:translateY(1px); }
+    .btn.primary{
+      border-color:rgba(124,92,255,.55);
+      background:linear-gradient(135deg, rgba(124,92,255,.35), rgba(0,212,255,.22));
+    }
+
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:10px 18px 40px;
+      display:grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap:18px;
+    }
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .panel-head{
+      padding:14px 16px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      background:rgba(255,255,255,.02);
+    }
+    .panel-head h2{
+      margin:0; font-size:14px; letter-spacing:.2px;
+      color:var(--muted); font-weight:800;
+      text-transform:uppercase;
+    }
+    .progress{
+      display:flex; align-items:center; gap:10px;
+      color:var(--muted); font-size:13px; white-space:nowrap;
+    }
+    .bar{
+      width:200px; height:10px;
+      background:rgba(255,255,255,.06);
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.07);
+    }
+    .bar > i{
+      display:block; height:100%; width:0%;
+      background:linear-gradient(90deg, rgba(124,92,255,.95), rgba(0,212,255,.9));
+      border-radius:999px;
+      transition:width .2s ease;
+    }
+
+    .grid{
+      padding:16px;
+      display:grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap:12px;
+    }
+    .tile{
+      position:relative;
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid var(--border);
+      padding:12px;
+      min-height:108px;
+      cursor:pointer;
+      user-select:none;
+      transition:transform .08s ease, border-color .15s ease, background .15s ease;
+      overflow:hidden;
+    }
+    .tile:hover{
+      transform:translateY(-1px);
+      border-color:rgba(124,92,255,.35);
+      background:linear-gradient(180deg, rgba(124,92,255,.10), rgba(255,255,255,.02));
+    }
+    .tile .top{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+    }
+    .tile .num{
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.6px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .tile .tag{
+      font-size:11px;
+      padding:6px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .tile .title{
+      margin-top:10px;
+      font-size:13px;
+      font-weight:800;
+      line-height:1.25;
+    }
+    .tile .meta{
+      margin-top:6px;
+      font-size:12px;
+      color:var(--muted);
+    }
+    .tile .check{
+      position:absolute;
+      top:10px; right:10px;
+      width:26px; height:26px;
+      border-radius:10px;
+      display:grid; place-items:center;
+      border:1px solid rgba(45,212,191,.35);
+      background:rgba(45,212,191,.12);
+      color:var(--ok);
+      opacity:0;
+      transform:scale(.95);
+      transition:opacity .15s ease, transform .15s ease;
+    }
+    .tile.opened .check{ opacity:1; transform:scale(1); }
+    .tile .glow{
+      position:absolute;
+      inset:auto -60px -60px auto;
+      width:140px; height:140px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, rgba(0,212,255,.18), transparent 60%);
+      filter:blur(2px);
+      pointer-events:none;
+    }
+
+    .detail{ padding:16px; }
+    .detail h3{ margin:0; font-size:18px; line-height:1.25; }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:12px;
+      margin:10px 0 12px;
+      flex-wrap:wrap;
+    }
+
+    .visual{
+      width:100%;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.02);
+      overflow:hidden;
+      margin:10px 0 14px;
+    }
+    .visual img{
+      width:100%;
+      display:block;
+      max-height:240px;
+      object-fit:cover;
+    }
+
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap:10px;
+    }
+    .thumb{
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.02);
+      cursor:pointer;
+      transition:transform .08s ease, border-color .15s ease;
+    }
+    .thumb:hover{ transform:translateY(-1px); border-color:rgba(124,92,255,.35); }
+    .thumb img{ width:100%; height:86px; object-fit:cover; display:block; }
+
+    .block{
+      margin:12px 0;
+      padding:12px;
+      border-radius:16px;
+      background:rgba(255,255,255,.02);
+      border:1px solid var(--border);
+    }
+    .block .k{
+      font-size:12px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-weight:900;
+    }
+    .block .v{
+      margin-top:6px;
+      font-size:14px;
+      line-height:1.55;
+      color:var(--text);
+      white-space:pre-line;
+    }
+    .detail-actions{
+      display:flex; gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .modal{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:50;
+    }
+    .modal.show{ display:flex; }
+    .modal-card{
+      width:min(760px, 100%);
+      border-radius:22px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(20,24,36,.96), rgba(10,12,18,.96));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .modal-top{
+      padding:14px 16px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .x{
+      width:36px; height:36px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:18px;
+    }
+
+    footer{
+      max-width:1200px;
+      margin:0 auto;
+      padding:0 18px 28px;
+      color:var(--muted);
+      font-size:12px;
+      opacity:.85;
+    }
+
+    @media (max-width: 980px){
+      header{ align-items:flex-start; flex-direction:column; }
+      .wrap{ grid-template-columns:1fr; }
+      .grid{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+      .bar{ width:160px; }
+      .gallery{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+    }
+    @media (max-width: 560px){
+      .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .pill input{ min-width:120px; }
+      .gallery{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <h1>🎁 Spine Decade Calendar</h1>
+      <p>Major releases: <b>SpineNEXTGEN ERP</b>, <b>Online Billing</b>, <b>Mobile Apps</b>, <b>Corporate Websites</b>, and <b>AI Software</b> (Bidcraft, Athena, Vortex).</p>
+    </div>
+
+    <div class="top-actions">
+      <div class="pill">🔎 <input id="search" type="text" placeholder="Search (Bidcraft, NextGen, SFA…)" /></div>
+      <div class="pill">🧭
+        <select id="series">
+          <option value="ALL">All series</option>
+        </select>
+      </div>
+      <button class="btn" id="openAll">Open all</button>
+      <button class="btn" id="reset">Reset</button>
+      <button class="btn primary" id="random">Random door</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Calendar</h2>
+        <div class="progress">
+          <span id="count">0/25 opened</span>
+          <div class="bar"><i id="barFill"></i></div>
+        </div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-head">
+        <h2>Door details</h2>
+        <div class="progress" style="gap:8px"><span id="hint">Click a door</span></div>
+      </div>
+      <div class="detail" id="detail"></div>
+    </aside>
+  </main>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="Door details">
+      <div class="modal-top">
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <div id="modalTitle" style="font-weight:900;"></div>
+          <span class="badge" id="modalBadge"></span>
+        </div>
+        <button class="x" id="close">×</button>
+      </div>
+
+      <div style="padding:16px;">
+        <div class="visual" id="modalVisual" style="display:none"></div>
+
+        <div class="block" id="modalGalleryWrap" style="display:none">
+          <div class="k">Gallery</div>
+          <div class="v" style="margin-top:10px;">
+            <div class="gallery" id="modalGallery"></div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="k">Launched</div>
+          <div class="v" id="modalLaunched"></div>
+        </div>
+
+        <div class="block">
+          <div class="k">Short description</div>
+          <div class="v" id="modalDesc"></div>
+        </div>
+
+        <div class="block">
+          <div class="k">Impact & Benefits</div>
+          <div class="v" id="modalBenefits"></div>
+        </div>
+
+        <div class="block">
+          <div class="k">Who it benefits</div>
+          <div class="v" id="modalWho"></div>
+        </div>
+
+        <div class="detail-actions">
+          <button class="btn" id="toggleOpen">Mark opened</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Tip: Add screenshots (ERP screen, billing screen, app UI) and website thumbnails in <code>visual</code> / <code>gallery</code>.
+  </footer>
+
+  <script>
+    // ---------------------------------
+    // DATA (25 doors) — includes AI software
+    // Fields: launched, desc, benefits, who
+    // ---------------------------------
+    const DOORS = [
+      // NextGen ERP (5)
+      { day:1, emoji:"🧠", series:"NextGen ERP", title:"SpineNEXTGEN ERP launched", tag:"Launch",
+        launched:"SpineNEXTGEN ERP platform released.",
+        desc:"Next-generation ERP that connects planning, production, quality, warehouse, finance, HR, sales and procurement under one system.",
+        benefits:"• Faster workflows and approvals\n• Better visibility across departments\n• Reduced manual work via automation\n• Stronger control with audit trails",
+        who:"Ops + Finance + QA + HR", visual:null, gallery:null
+      },
+      { day:2, emoji:"🧩", series:"NextGen ERP", title:"NextGen modules rollout", tag:"Modules",
+        launched:"Core modules rolled out on NextGen.",
+        desc:"Inventory Control, PPC, QC/QA, WMS, HRM, Accounts & Finance, Sales, Purchase.",
+        benefits:"• End-to-end function coverage\n• Unified data for reporting\n• Less duplication between teams",
+        who:"Ops + HR + Finance + QA", visual:null, gallery:null
+      },
+      { day:3, emoji:"⚙️", series:"NextGen ERP", title:"Automation layer enabled", tag:"Automation",
+        launched:"Automation workflows enabled across ERP.",
+        desc:"Auto vouchers, notifications/alerts, auto-emails and customizable reports to reduce repetitive effort.",
+        benefits:"• Faster processing cycles\n• Lower manual entry errors\n• More consistent reporting",
+        who:"Finance + Operations", visual:null, gallery:null
+      },
+      { day:4, emoji:"✅", series:"NextGen ERP", title:"Compliance features enabled", tag:"Compliance",
+        launched:"Compliance-ready controls activated in NextGen.",
+        desc:"Audit trail, access controls, GST/tax support and e-invoicing readiness for controlled operations.",
+        benefits:"• Better traceability\n• Easier audits\n• Cleaner compliance workflows",
+        who:"Finance + QA + Compliance", visual:null, gallery:null
+      },
+      { day:5, emoji:"📈", series:"NextGen ERP", title:"Scale & stability milestone", tag:"Scale",
+        launched:"High-volume operational stability achieved.",
+        desc:"Designed to handle heavy daily transactions and multi-location working with stronger performance.",
+        benefits:"• Stable operations at scale\n• Faster data handling\n• More reliable day-to-day usage",
+        who:"Business + All Users", visual:null, gallery:null
+      },
+
+      // Online Billing (3)
+      { day:6, emoji:"🧾", series:"Online Billing", title:"PharmaTrader launched", tag:"Billing",
+        launched:"PharmaTrader online billing software released.",
+        desc:"Billing and distributor operations software designed for invoices, trade workflows and secondary sales processes.",
+        benefits:"• Faster billing\n• Reduced billing mistakes\n• Better distributor workflow tracking",
+        who:"Trade Team + Distributors", visual:null, gallery:null
+      },
+      { day:7, emoji:"🧾", series:"Online Billing", title:"SpineTrader launched", tag:"Billing",
+        launched:"SpineTrader released for billing + trade management.",
+        desc:"Trade management suite that supports billing operations with structured processes and consistent data.",
+        benefits:"• Standardized billing\n• Better transaction visibility\n• Improved operational control",
+        who:"Trade + Retail Network", visual:null, gallery:null
+      },
+      { day:8, emoji:"🛡️", series:"Online Billing", title:"Always-on continuity", tag:"Reliability",
+        launched:"Upgrades and migrations done without disruption.",
+        desc:"Planned upgrades to keep trade/billing operations running smoothly with minimal downtime.",
+        benefits:"• Business continuity protected\n• Reduced disruption during upgrades\n• Faster recovery",
+        who:"Trade + IT", visual:null, gallery:null
+      },
+
+      // Mobile Apps (9)
+      { day:9, emoji:"📱", series:"Mobile Apps", title:"Venus Ayushmaan app launched", tag:"Mobile",
+        launched:"Venus Ayushmaan app released.",
+        desc:"Mobile access to product catalog and promotions for customers and distributors.",
+        benefits:"• Faster product access in the field\n• Better promo visibility\n• More informed ordering",
+        who:"Sales + Customers + Distributors", visual:null, gallery:null
+      },
+      { day:10, emoji:"🖊️", series:"Mobile Apps", title:"Pen Order Booking launched", tag:"Mobile",
+        launched:"Pen Order Booking app released.",
+        desc:"Digitized pen order booking to reduce manual coordination and improve speed.",
+        benefits:"• Faster booking\n• Cleaner order records\n• Less manual follow-ups",
+        who:"Sales + Distributors", visual:null, gallery:null
+      },
+      { day:11, emoji:"⚡", series:"Mobile Apps", title:"Spine SFA launched", tag:"Mobile",
+        launched:"Spine SFA app released for field teams.",
+        desc:"Sales force automation for fast reporting and activity capture, reducing time spent on DPR and updates.",
+        benefits:"• Faster reporting\n• Better daily visibility\n• Reduced paperwork",
+        who:"Field Force + Managers", visual:null, gallery:null
+      },
+      { day:12, emoji:"💼", series:"Mobile Apps", title:"Entrepreneur Program app launched", tag:"Mobile",
+        launched:"Entrepreneur Program (EP) app released.",
+        desc:"Supports EP workflows like debit notes and departmental P/L insights in one place.",
+        benefits:"• Better program tracking\n• Faster financial visibility\n• Reduced manual reconciliation",
+        who:"Business + Finance", visual:null, gallery:null
+      },
+      { day:13, emoji:"👥", series:"Mobile Apps", title:"SpineHRM app launched", tag:"Mobile",
+        launched:"SpineHRM app released.",
+        desc:"Mobile HR workflows for employee operations and requests (configure to your exact modules).",
+        benefits:"• Faster HR turnaround\n• Less paperwork\n• Better employee experience",
+        who:"HR + Employees", visual:null, gallery:null
+      },
+      { day:14, emoji:"🏆", series:"Mobile Apps", title:"PPL app launched", tag:"Mobile",
+        launched:"PPL performance app released.",
+        desc:"Gamified performance visibility to improve engagement, motivation and adoption of goals.",
+        benefits:"• Clear performance visibility\n• Higher engagement\n• Faster recognition cycles",
+        who:"Sales + Teams", visual:null, gallery:null
+      },
+      { day:15, emoji:"🚚", series:"Mobile Apps", title:"Venus DTS app launched", tag:"Mobile",
+        launched:"Venus DTS app released.",
+        desc:"Stockist ordering, tracking and payment workflows to manage partner operations.",
+        benefits:"• Smoother ordering lifecycle\n• Better tracking\n• Faster partner servicing",
+        who:"Stockists + Sales + Trade", visual:null, gallery:null
+      },
+      { day:16, emoji:"🌐", series:"Mobile Apps", title:"Davai app launched", tag:"Mobile",
+        launched:"Davai mobile app released.",
+        desc:"B2B pharma transactions on mobile for faster execution and easier access on the go.",
+        benefits:"• Faster transactions\n• Better accessibility\n• Less dependency on desktop-only flows",
+        who:"Trade + Partners", visual:null, gallery:null
+      },
+      { day:17, emoji:"📦", series:"Mobile Apps", title:"Mobile portfolio shipped", tag:"Portfolio",
+        launched:"A portfolio of business mobile apps delivered.",
+        desc:"Connected set of apps across sales, trade, HR and programs designed to reduce manual work and speed up workflows.",
+        benefits:"• Mobile-first execution\n• Faster field operations\n• Better cross-team visibility",
+        who:"Sales + Trade + HR + Ops", visual:null, gallery:null
+      },
+
+      // Corporate Websites (2)
+      { day:18, emoji:"🕸️", series:"Corporate Websites", title:"50+ corporate websites launched", tag:"Web",
+        launched:"50+ corporate and product websites launched.",
+        desc:"Website rollout at scale to expand digital presence across brands, products, initiatives and business units.",
+        benefits:"• Stronger brand visibility\n• Faster publishing and updates\n• Better customer access to information",
+        who:"Marketing + Business + Customers",
+        visual:null,
+        gallery:[
+          "assets/site_01.jpg","assets/site_02.jpg","assets/site_03.jpg","assets/site_04.jpg",
+          "assets/site_05.jpg","assets/site_06.jpg","assets/site_07.jpg","assets/site_08.jpg"
+        ]
+      },
+      { day:19, emoji:"📣", series:"Corporate Websites", title:"Website growth outcomes", tag:"SEO/Leads",
+        launched:"SEO and enquiry funnels strengthened.",
+        desc:"Publishing and optimization workflows improved to drive better search visibility and enquiries.",
+        benefits:"• Higher organic visibility\n• More inbound enquiries\n• Better lead capture experience",
+        who:"Marketing + Sales", visual:null, gallery:null
+      },
+
+      // AI Software (3) — NEW
+      { day:20, emoji:"🤖", series:"AI Software", title:"Bidcraft launched", tag:"Smart Bidding",
+        launched:"Bidcraft smart bidding software released.",
+        desc:"AI-assisted bidding system designed to improve bid decisions using data signals, rules and optimization logic.",
+        benefits:"• Smarter bid recommendations\n• Reduced manual analysis time\n• More consistent decision-making",
+        who:"Sales/Business Teams + Leadership", visual:null, gallery:null
+      },
+      { day:21, emoji:"🧠", series:"AI Software", title:"Athena launched", tag:"AI Intelligence",
+        launched:"Athena AI solution released.",
+        desc:"Intelligence layer to support analysis, insights and decision workflows across business use-cases.",
+        benefits:"• Faster insights from data\n• Improved visibility for decision-makers\n• Support for automation and analysis",
+        who:"Leadership + Analytics + Teams", visual:null, gallery:null
+      },
+      { day:22, emoji:"🌪️", series:"AI Software", title:"Vortex launched", tag:"AI Engine",
+        launched:"Vortex AI solution released.",
+        desc:"AI engine built for faster processing, pattern detection and intelligent workflows (adapt to your exact capability set).",
+        benefits:"• Faster processing\n• Better anomaly/pattern detection\n• More intelligent operational workflows",
+        who:"IT + Operations + Business", visual:null, gallery:null
+      },
+
+      // Backbone (3) — trimmed to keep total 25 while adding AI
+      { day:23, emoji:"🧯", series:"Backbone", title:"Monitoring & alerting enabled", tag:"Reliability",
+        launched:"Monitoring and alerts enabled for critical services.",
+        desc:"Proactive monitoring to detect issues early and reduce downtime surprises.",
+        benefits:"• Faster issue detection\n• Quicker response\n• Better uptime",
+        who:"Infra + DBA + IT Support", visual:null, gallery:null
+      },
+      { day:24, emoji:"🛡️", series:"Backbone", title:"Security upgrades shipped", tag:"Security",
+        launched:"Security hardening implemented.",
+        desc:"Network and security upgrades to protect systems and ensure stable connectivity.",
+        benefits:"• Reduced risk\n• Stronger controls\n• Better reliability",
+        who:"IT + Security + All Users", visual:null, gallery:null
+      },
+      { day:25, emoji:"🏁", series:"Wrap", title:"Decade wrap: platform maturity", tag:"Impact",
+        launched:"Spine ecosystem matured into a full business platform.",
+        desc:"ERP + billing + mobile + websites + AI working together to support operations and growth.",
+        benefits:"• Faster operations\n• Better visibility\n• Stronger control and compliance\n• Scalable digital foundation",
+        who:"Everyone", visual:null, gallery:null
+      },
+    ];
+
+    // ---------------------------------
+    // State
+    // ---------------------------------
+    const state = {
+      opened: new Set(JSON.parse(localStorage.getItem("spine_opened_major_ai") || "[]")),
+      selected: null,
+      search: "",
+      series: "ALL"
+    };
+
+    const $ = (sel) => document.querySelector(sel);
+    const grid = $("#grid");
+    const detail = $("#detail");
+    const searchEl = $("#search");
+    const seriesEl = $("#series");
+    const countEl = $("#count");
+    const barFill = $("#barFill");
+    const hint = $("#hint");
+
+    // Modal
+    const modal = $("#modal");
+    const modalTitle = $("#modalTitle");
+    const modalBadge = $("#modalBadge");
+    const modalVisual = $("#modalVisual");
+    const modalGalleryWrap = $("#modalGalleryWrap");
+    const modalGallery = $("#modalGallery");
+    const modalLaunched = $("#modalLaunched");
+    const modalDesc = $("#modalDesc");
+    const modalBenefits = $("#modalBenefits");
+    const modalWho = $("#modalWho");
+    const toggleOpenBtn = $("#toggleOpen");
+
+    function saveOpened(){
+      localStorage.setItem("spine_opened_major_ai", JSON.stringify([...state.opened]));
+      updateProgress();
+      renderGrid();
+      if (state.selected) renderDetail(state.selected);
+    }
+
+    function matches(d){
+      if (state.series !== "ALL" && d.series !== state.series) return false;
+      if (!state.search) return true;
+      const hay = `${d.day} ${d.series} ${d.title} ${d.launched} ${d.desc} ${d.benefits} ${d.who} ${d.tag}`.toLowerCase();
+      return hay.includes(state.search.toLowerCase());
+    }
+
+    function updateProgress(){
+      const total = DOORS.length;
+      const opened = state.opened.size;
+      countEl.textContent = `${opened}/${total} opened`;
+      barFill.style.width = `${Math.round((opened/total)*100)}%`;
+    }
+
+    function renderSeriesOptions(){
+      const series = ["ALL", ...Array.from(new Set(DOORS.map(d => d.series))).sort()];
+      seriesEl.innerHTML = series.map(s => `<option value="${s}">${s === "ALL" ? "All series" : s}</option>`).join("");
+      seriesEl.value = state.series;
+    }
+
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function renderGrid(){
+      const list = DOORS.filter(matches);
+      grid.innerHTML = "";
+      list.forEach(d => {
+        const opened = state.opened.has(d.day);
+        const tile = document.createElement("div");
+        tile.className = `tile ${opened ? "opened" : ""}`;
+        tile.tabIndex = 0;
+
+        tile.innerHTML = `
+          <div class="top">
+            <div class="num">
+              <span>${escapeHtml(d.emoji || "🎁")}</span>
+              <span>${String(d.day).padStart(2,"0")}</span>
+            </div>
+            <span class="tag">${escapeHtml(d.series)}</span>
+          </div>
+          <div class="title">${escapeHtml(d.title)}</div>
+          <div class="meta">${escapeHtml(d.tag || "")}</div>
+          <div class="check">✓</div>
+          <div class="glow"></div>
+        `;
+
+        tile.addEventListener("click", () => {
+          state.selected = d.day;
+          renderDetail(d.day);
+          openModal(d.day);
+        });
+        tile.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            state.selected = d.day;
+            renderDetail(d.day);
+            openModal(d.day);
+          }
+        });
+
+        grid.appendChild(tile);
+      });
+    }
+
+    function renderDetail(day){
+      const d = DOORS.find(x => x.day === day);
+      if (!d) return;
+
+      hint.textContent = "Selected";
+      const opened = state.opened.has(d.day);
+      const badgeBits = [d.series, d.tag].filter(Boolean).map(escapeHtml);
+
+      detail.innerHTML = `
+        <h3>${escapeHtml(d.emoji || "🎁")} Door ${String(d.day).padStart(2,"0")}: ${escapeHtml(d.title)}</h3>
+        <div class="badge">${badgeBits.join(" • ")}</div>
+
+        ${d.visual ? `
+          <div class="visual">
+            <img src="${d.visual}" alt="Door visual">
+          </div>
+        ` : ""}
+
+        ${Array.isArray(d.gallery) && d.gallery.length ? `
+          <div class="block">
+            <div class="k">Gallery</div>
+            <div class="v" style="margin-top:10px;">
+              <div class="gallery">
+                ${d.gallery.map(src => `
+                  <div class="thumb" data-src="${src}">
+                    <img src="${src}" alt="thumbnail">
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+          </div>
+        ` : ""}
+
+        <div class="block">
+          <div class="k">Launched</div>
+          <div class="v">${escapeHtml(d.launched)}</div>
+        </div>
+
+        <div class="block">
+          <div class="k">Short description</div>
+          <div class="v">${escapeHtml(d.desc)}</div>
+        </div>
+
+        <div class="block">
+          <div class="k">Impact & Benefits</div>
+          <div class="v">${escapeHtml(d.benefits)}</div>
+        </div>
+
+        <div class="block">
+          <div class="k">Who it benefits</div>
+          <div class="v">${escapeHtml(d.who)}</div>
+        </div>
+
+        <div class="detail-actions">
+          <button class="btn" id="toggleFromPanel">${opened ? "Mark unopened" : "Mark opened"}</button>
+        </div>
+      `;
+
+      const toggleBtn = $("#toggleFromPanel");
+      if (toggleBtn){
+        toggleBtn.addEventListener("click", () => {
+          if (opened) state.opened.delete(d.day);
+          else state.opened.add(d.day);
+          saveOpened();
+        });
+      }
+
+      detail.querySelectorAll(".thumb").forEach(el => {
+        el.addEventListener("click", () => {
+          const src = el.getAttribute("data-src");
+          state.selected = d.day;
+          openModal(d.day, src);
+        });
+      });
+    }
+
+    function openModal(day, overrideVisual=null){
+      const d = DOORS.find(x => x.day === day);
+      if (!d) return;
+
+      const opened = state.opened.has(d.day);
+      const badgeBits = [d.series, d.tag].filter(Boolean).join(" • ");
+
+      modalTitle.textContent = `${d.emoji || "🎁"} Door ${String(d.day).padStart(2,"0")}: ${d.title}`;
+      modalBadge.textContent = badgeBits;
+
+      const vis = overrideVisual || d.visual;
+      if (vis){
+        modalVisual.style.display = "block";
+        modalVisual.innerHTML = `<img src="${vis}" alt="Door visual">`;
+      } else {
+        modalVisual.style.display = "none";
+        modalVisual.innerHTML = "";
+      }
+
+      if (Array.isArray(d.gallery) && d.gallery.length){
+        modalGalleryWrap.style.display = "block";
+        modalGallery.innerHTML = d.gallery.map(src => `
+          <div class="thumb" data-src="${src}">
+            <img src="${src}" alt="thumbnail">
+          </div>
+        `).join("");
+
+        modalGallery.querySelectorAll(".thumb").forEach(el => {
+          el.addEventListener("click", () => openModal(d.day, el.getAttribute("data-src")));
+        });
+      } else {
+        modalGalleryWrap.style.display = "none";
+        modalGallery.innerHTML = "";
+      }
+
+      modalLaunched.textContent = d.launched;
+      modalDesc.textContent = d.desc;
+      modalBenefits.textContent = d.benefits;
+      modalWho.textContent = d.who;
+
+      toggleOpenBtn.textContent = opened ? "Mark unopened" : "Mark opened";
+      toggleOpenBtn.onclick = () => {
+        if (state.opened.has(d.day)) state.opened.delete(d.day);
+        else state.opened.add(d.day);
+        saveOpened();
+        toggleOpenBtn.textContent = state.opened.has(d.day) ? "Mark unopened" : "Mark opened";
+      };
+
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeModal(){
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    // Events
+    searchEl.addEventListener("input", (e) => { state.search = e.target.value || ""; renderGrid(); });
+    seriesEl.addEventListener("change", (e) => { state.series = e.target.value; renderGrid(); });
+
+    $("#openAll").addEventListener("click", () => { DOORS.forEach(d => state.opened.add(d.day)); saveOpened(); });
+    $("#reset").addEventListener("click", () => {
+      state.opened.clear(); state.selected = null; saveOpened();
+      hint.textContent = "Click a door"; detail.innerHTML = ""; closeModal();
+    });
+    $("#random").addEventListener("click", () => {
+      const list = DOORS.filter(matches);
+      if (!list.length) return;
+      const d = list[Math.floor(Math.random() * list.length)];
+      state.selected = d.day;
+      renderDetail(d.day);
+      openModal(d.day);
+    });
+
+    $("#close").addEventListener("click", closeModal);
+    modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+    // Init
+    renderSeriesOptions();
+    updateProgress();
+    renderGrid();
+  </script>
+</body>
+</html>
